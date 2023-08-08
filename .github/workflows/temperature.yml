@@ -1,20 +1,23 @@
 name: Setup R Environment
-on: [push]
+on:
+  push:
+    branches:
+main 
+
 jobs:
   setup-r:
     runs-on: ubuntu-latest
-    
     steps:
- name: Checkout code
- uses: actions/checkout@v2
-    
- name: Set up R
- uses: r-lib/actions/setup-r@v1
+name: Checkout code
+      uses: actions/checkout@v2
+
+name: Set up R
+      uses: r-lib/actions/setup-r@v1
       with:
-        r-version: '4.0'  # 選擇所需的R版本
+        r-version: '4.0'  # Choose the desired R version
 
 name: Install dependencies
-      run: |
+      run: 
           - name: Install packages # 安装需要的 R 包
         run: |
           R -e "install.packages('rvest')"
