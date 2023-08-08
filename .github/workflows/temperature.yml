@@ -1,23 +1,21 @@
-name: Auto Crawling
-
-on:
-  schedule:
-    - cron: '0 * * * *'  # 每天 UTC 时间 00:00 执行
-
+name: Setup R Environment
+on: [push]
 jobs:
-  crawl_job:
+  setup-r:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+ name: Checkout code
+ uses: actions/checkout@v2
+    
+ name: Set up R
+ uses: r-lib/actions/setup-r@v1
+      with:
+        r-version: '4.0'  # 選擇所需的R版本
 
-      - name: Set up R
-        uses: r-lib/actions/setup-r@v1
-        with:
-          r-version: '4.0'  # 使用你的 R 版本
-
-      - name: Install packages # 安装需要的 R 包
+name: Install dependencies
+      run: |
+          - name: Install packages # 安装需要的 R 包
         run: |
           R -e "install.packages('rvest')"
           R -e "install.packages('httr')"
@@ -27,6 +25,16 @@ jobs:
           R -e "library(rvest)"
           R -e "library(tidyverse)"
           R -e "library(jsonlite)"
+
+
+name: Auto Crawling
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # 每天 UTC 时间 00:00 执行
+
+jobs:
+  crawl_job:
           
       - name: Run crawler
         run: taipei_tenperature.R  # 运行你的爬虫脚本
