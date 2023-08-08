@@ -15,12 +15,19 @@ jobs:
       - name: Set up R
         uses: r-lib/actions/setup-r@v1
         with:
-          r-version: '4.1'  # 使用你的 R 版本
+          r-version: '4.0'  # 使用你的 R 版本
 
-      - name: Install packages
+      - name: Install packages # 安装需要的 R 包
         run: |
-          R -e "install.packages('rvest')"  # 安装需要的 R 包
-
+          R -e "install.packages('rvest')"
+          R -e "install.packages('httr')"
+          R -e "install.packages('tidyverse')"
+          R -e "install.packages('jsonlite')"
+          R -e "library(httr)"
+          R -e "library(rvest)"
+          R -e "library(tidyverse)"
+          R -e "library(jsonlite)"
+          
       - name: Run crawler
         run: taipei_tenperature.R  # 运行你的爬虫脚本
 
